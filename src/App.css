@@ -1,0 +1,21 @@
+.board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    justify-items: center; /* محتوای ستون‌ها وسط‌چین بشن */
+}
+
+
+
+@media (max-width: 768px) {
+  .board {
+    grid-template-columns: repeat(2, 1fr); /* موبایل یا تبلت */
+  }
+}
+
+@media (min-width: 1200px) {
+  .board {
+    grid-template-columns: repeat(4, 1fr); /* دسکتاپ */
+  }
+}
