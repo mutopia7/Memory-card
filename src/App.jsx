@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import Card from './components/Card.jsx'
 
-const cards = [{
+const initialCards = [{
   id: crypto.randomUUID(),
   value: 1,
   content: 'number 1'
@@ -64,7 +64,17 @@ const cards = [{
 }
 ];
 
+function shuffleArray(array) {
+  const shuffled = [...array]; // تغییر روی کپی نه اصل داده
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 function App() {
+  const [cards, setCards] = useState(() => shuffleArray(initialCards))
 
   return (
     <div className='board'>
