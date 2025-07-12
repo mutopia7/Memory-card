@@ -64,6 +64,7 @@ const initialCards = [{
 }
 ];
 
+// for random show
 function shuffleArray(array) {
   const shuffled = [...array]; // تغییر روی کپی نه اصل داده
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -74,13 +75,33 @@ function shuffleArray(array) {
 }
 
 function App() {
-  const [cards, setCards] = useState(() => shuffleArray(initialCards))
+  const [cards, setCards] = useState(() => shuffleArray(initialCards));
+  const [clickedMap, setClickedMap] = useState({});
+  const [score, setScore] = useState(0)
+
+  function handleCardClick(cardId){
+    if (clickedMap[cardId]) {
+      alert ('You already clicked this card! Score reset.');
+      setClickedMap({});
+      setScore(0);
+      // setCards(() => shuffleArray(initialCards))
+    } else {
+      setClickedMap({...clickedMap, [cardId]: true});
+      setScore(score + 1);
+      setCards(shuffleArray(initialCards))
+    }
+  }
 
   return (
     <div className='board'>
       {cards.map((card) => (
-      <Card key={card.id} value={card.value} content={card.content} />
+      <Card
+      key={card.id} 
+      value={card.value} 
+      content={card.content} 
+      onClick={() => handleCardClick(card.id)} />
       ))}
+      <p>score is {score}</p>
     </div>
 
   )
