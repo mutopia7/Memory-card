@@ -78,13 +78,17 @@ function App() {
   const [cards, setCards] = useState(() => shuffleArray(initialCards));
   const [clickedMap, setClickedMap] = useState({});
   const [score, setScore] = useState(0)
+  const [bestScore, setBestScore] = useState(0)
+
+
 
   function handleCardClick(cardId){
     if (clickedMap[cardId]) {
       alert ('You already clicked this card! Score reset.');
       setClickedMap({});
+      if (score > bestScore) {setBestScore(score)}
       setScore(0);
-      // setCards(() => shuffleArray(initialCards))
+      setCards(() => shuffleArray(initialCards))
     } else {
       setClickedMap({...clickedMap, [cardId]: true});
       setScore(score + 1);
@@ -102,6 +106,8 @@ function App() {
       onClick={() => handleCardClick(card.id)} />
       ))}
       <p>score is {score}</p>
+      <br />
+      <p>The best score is {bestScore}</p>
     </div>
 
   )
