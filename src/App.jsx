@@ -22,18 +22,25 @@ function App() {
 
   // fetch from API
   useEffect(() => {
-  async function fetchCharacters() {
-    try {
-      const res = await fetch('https://rickandmortyapi.com/api/character?page=1');
-      const data = await res.json();
-      cardsRef.current = data.results.slice(0, 12);
-      setCards(shuffleArray(cardsRef.current));
-    } catch (error) {
-      console.error("Failed to fetch characters:", error);
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    async function fetchCharacters() {
+      try {
+        const res = await fetch('https://rickandmortyapi.com/api/character?page=1', { signal });
+        const data = await res.json();
+        cardsRef.current = data.results.slice(0, 12);
+        setCards(shuffleArray(cardsRef.current));
+      } catch (error) {
+        console.error("Failed to fetch characters:", error);
+      }
     }
-  }
-  fetchCharacters();
-}, []);
+
+    fetchCharacters();
+
+    // Cleanup
+    return () => controller.abort();
+  }, []);
 
 
 
