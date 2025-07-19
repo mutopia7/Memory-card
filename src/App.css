@@ -6,6 +6,23 @@
     justify-items: center; /* محتوای ستون‌ها وسط‌چین بشن */
 }
 
+.explain{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 2rem;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.scoreShow{
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+}
 
 
 @media (max-width: 768px) {

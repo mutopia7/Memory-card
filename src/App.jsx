@@ -82,32 +82,42 @@ function App() {
 
 
 
-  function handleCardClick(cardId){
+  function handleCardClick(cardId) {
     if (clickedMap[cardId]) {
-      alert ('You already clicked this card! Score reset.');
+      alert('You already clicked this card! Score reset.');
       setClickedMap({});
-      if (score > bestScore) {setBestScore(score)}
+      if (score > bestScore) { setBestScore(score) }
       setScore(0);
       setCards(() => shuffleArray(initialCards))
     } else {
-      setClickedMap({...clickedMap, [cardId]: true});
+      setClickedMap({ ...clickedMap, [cardId]: true });
       setScore(score + 1);
       setCards(shuffleArray(initialCards))
     }
   }
 
   return (
-    <div className='board'>
-      {cards.map((card) => (
-      <Card
-      key={card.id} 
-      value={card.value} 
-      content={card.content} 
-      onClick={() => handleCardClick(card.id)} />
-      ))}
-      <p>score is {score}</p>
-      <br />
-      <p>The best score is {bestScore}</p>
+    <div>
+      <div className='explain'>
+        <div className='header'>
+          <h1>Rick and Morty Memory Game</h1>
+          <div className='scoreShow'>
+            <p>Score: {score}</p>
+            <p>Best Score: {bestScore}</p>
+          </div>
+        </div>
+        <h2>Get points by clicking on an image but don't click on any more than once!</h2>
+      </div>
+      <div className='board'>
+        {cards.map((card) => (
+          <Card
+            key={card.id}
+            value={card.value}
+            content={card.content}
+            onClick={() => handleCardClick(card.id)} />
+        ))}
+      </div>
+      
     </div>
 
   )
