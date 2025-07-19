@@ -1,68 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import Card from './components/Card.jsx'
 
-const initialCards = [{
-  id: crypto.randomUUID(),
-  value: 1,
-  content: 'number 1'
-},
-{
-  id: crypto.randomUUID(),
-  value: 2,
-  content: 'number 2'
-},
-{
-  id: crypto.randomUUID(),
-  value: 3,
-  content: 'number 3'
-},
-{
-  id: crypto.randomUUID(),
-  value: 4,
-  content: 'number 4'
-},
-{
-  id: crypto.randomUUID(),
-  value: 5,
-  content: 'number 5'
-},
-{
-  id: crypto.randomUUID(),
-  value: 6,
-  content: 'number 6'
-},
-{
-  id: crypto.randomUUID(),
-  value: 7,
-  content: 'number 7'
-},
-{
-  id: crypto.randomUUID(),
-  value: 8,
-  content: 'number 8'
-},
-{
-  id: crypto.randomUUID(),
-  value: 9,
-  content: 'number 9'
-},
-{
-  id: crypto.randomUUID(),
-  value: 10,
-  content: 'number 10'
-},
-{
-  id: crypto.randomUUID(),
-  value: 11,
-  content: 'number 11'
-},
-{
-  id: crypto.randomUUID(),
-  value: 12,
-  content: 'number 12'
-}
-];
 
 // for random show
 function shuffleArray(array) {
@@ -75,10 +14,27 @@ function shuffleArray(array) {
 }
 
 function App() {
-  const [cards, setCards] = useState(() => shuffleArray(initialCards));
+  const [cards, setCards] = useState([]);
   const [clickedMap, setClickedMap] = useState({});
+  const cardsRef = useRef([])
   const [score, setScore] = useState(0)
   const [bestScore, setBestScore] = useState(0)
+
+  // fetch from API
+  useEffect(() => {
+  async function fetchCharacters() {
+    try {
+      const res = await fetch('https://rickandmortyapi.com/api/character?page=1');
+      const data = await res.json();
+      cardsRef.current = data.results.slice(0, 12);
+      setCards(shuffleArray(cardsRef.current));
+    } catch (error) {
+      console.error("Failed to fetch characters:", error);
+    }
+  }
+  fetchCharacters();
+}, []);
+
 
 
 
@@ -88,11 +44,11 @@ function App() {
       setClickedMap({});
       if (score > bestScore) { setBestScore(score) }
       setScore(0);
-      setCards(() => shuffleArray(initialCards))
+      setCards(() => shuffleArray(cardsRef.current))
     } else {
-      setClickedMap({ ...clickedMap, [cardId]: true });
-      setScore(score + 1);
-      setCards(shuffleArray(initialCards))
+      setClickedMap(prev => ({ ...prev, [cardId]: true }));
+      setScore(prev => prev + 1);
+      setCards(shuffleArray(cardsRef.current))
     }
   }
 
@@ -112,12 +68,12 @@ function App() {
         {cards.map((card) => (
           <Card
             key={card.id}
-            value={card.value}
-            content={card.content}
+            name={card.name}
+            image={card.image}
             onClick={() => handleCardClick(card.id)} />
         ))}
       </div>
-      
+
     </div>
 
   )

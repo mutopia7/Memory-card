@@ -1,16 +1,12 @@
 import { useState } from 'react'
 import styles from '../styles/Card.module.css'
 
-function Card({value, content, onClick}){
+function Card({ name, image, onClick }) {
     
-    function handleClick(){
-        setClicked(true);
-    } 
-
     return (
         <div className={styles.card} onClick={onClick}>
-            <h2>{value}</h2>
-            <p>{content}</p>
+            <img src={image} alt={name} className={styles.image} />
+            <p>{name}</p>
         </div>
     )
 }
