@@ -1,17 +1,97 @@
-.card{
-    background-color: aliceblue;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    padding: 2rem;
+/* ======== Card Styles ======== */
+.card {
+  background: #ffffff11;
+  border-radius: 1rem;
+  box-shadow:
+    0 4px 8px rgb(255 255 255 / 0.1),
+    inset 0 0 0 1px rgb(255 255 255 / 0.15);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 280px;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
 }
 
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow:
+    0 12px 24px rgb(255 255 255 / 0.3),
+    inset 0 0 0 1px rgb(255 255 255 / 0.25);
+  outline: none;
+}
+
+.card:active {
+  transform: translateY(-4px) scale(0.98);
+  box-shadow:
+    0 8px 12px rgb(255 255 255 / 0.4),
+    inset 0 0 0 1px rgb(255 255 255 / 0.3);
+}
+
+/* ======== Image Styling ======== */
 .image {
   width: 100%;
-  height: 150px;
-  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: 1rem;
   object-fit: cover;
-  border-radius: 0.5rem;
+  box-shadow:
+    0 8px 20px rgb(0 0 0 / 0.3);
+  transition: transform 0.4s ease;
+}
+
+.card:hover .image,
+.card:focus-visible .image {
+  transform: scale(1.08);
+}
+
+/* ======== Text Styling ======== */
+.cardName {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #fefefe;
+  text-align: center;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  user-select: none;
+}
+
+/* ======== Responsive Breakpoints ======== */
+@media (max-width: 1024px) {
+  .card {
+    max-width: 240px;
+    padding: 1.2rem;
+  }
+
+  .cardName {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    max-width: 200px;
+    padding: 1rem;
+  }
+
+  .cardName {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    max-width: 100%;
+    padding: 0.8rem;
+  }
+
+  .cardName {
+    font-size: 0.95rem;
+  }
 }
